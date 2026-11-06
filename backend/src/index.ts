@@ -19,17 +19,32 @@ import agentRoutes from './routes/agent';
 
 const app = express();
 
+// Behind Render/Vercel/Railway proxies so req.ip is the real client, not the load balancer
+app.set('trust proxy', 1);
+
 // Middleware
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  'http://localhost:3000',
+].filter(Boolean) as string[];
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: allowedOrigins,
   credentials: true,
 }));
 app.use(express.json());
 
-// Rate limiting
-app.use('/api/auth', rateLimit(20, 60000)); // 20 req/min for auth
-app.use('/api/discovery', rateLimit(30, 60000)); // 30 req/min for discovery
-app.use('/api/', rateLimit(100, 60000)); // 100 req/min general
+// Rate limiting — each limiter gets its own scope so counters never collide
+app.use('/api/auth', rateLimit(20, 60000, 'auth')); // 20 req/min for auth
+app.use('/api/discovery', rateLimit(30, 60000, 'discovery')); // 30 req/min for discovery
+app.use('/api/', rateLimit(100, 60000, 'api')); // 100 req/min general
+
+// Make sure MongoDB is connected before any route runs. On Vercel a request can
+// arrive before the cold-start connection finishes; without this, mongoose
+// buffers for 10s and the call fails with a 500 (e.g. "Registration failed").
+app.use('/api', (req, res, next) => {
+  if (req.path === '/health') return next(); // health check must not depend on the DB
+  connectDB().then(() => next()).catch(next);
+});
 
 // Routes
 app.use('/api/auth', authRoutes);
@@ -68,7 +83,8 @@ app.get('/api/health', (_req, res) => {
 // Global error handler
 app.use(errorHandler);
 
-// Start server
+// Start server (local / long-running hosts only).
+// On Vercel the app is exported as a single Function, so it must NOT listen.
 async function start() {
   await connectDB();
   app.listen(env.PORT, () => {
@@ -77,9 +93,11 @@ async function start() {
   });
 }
 
-start().catch((err) => {
-  console.error('Failed to start server:', err);
-  process.exit(1);
-});
+if (!process.env.VERCEL) {
+  start().catch((err) => {
+    console.error('Failed to start server:', err);
+    process.exit(1);
+  });
+}
 
 export default app;

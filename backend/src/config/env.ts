@@ -15,8 +15,10 @@ export const env = {
   PORT: parseInt(process.env.PORT || '5000', 10),
   MONGODB_URI: requireEnv('MONGODB_URI'),
   JWT_SECRET: requireEnv('JWT_SECRET'),
-  YOUTUBE_API_KEY: requireEnv('YOUTUBE_API_KEY'),
-  GEMINI_API_KEY: requireEnv('GEMINI_API_KEY'),
+  // Optional integrations: the API still boots (auth, brands, campaigns all work)
+  // when these are missing — only YouTube discovery / AI writing degrade.
+  YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY || '',
+  GEMINI_API_KEY: process.env.GEMINI_API_KEY || '',
   SMTP_HOST: process.env.SMTP_HOST || '',
   SMTP_PORT: parseInt(process.env.SMTP_PORT || '587', 10),
   SMTP_USER: process.env.SMTP_USER || '',

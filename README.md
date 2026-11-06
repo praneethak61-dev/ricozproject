@@ -8,8 +8,8 @@ Example instruction: “Find dog-training YouTubers with 10K to 100K followers, 
 
 ## Tech Stack
 
-- **Frontend**: Next.js 14 (TypeScript) — deployable on Vercel
-- **Backend**: Node.js + Express.js (TypeScript)
+- **Frontend**: Next.js (TypeScript) — deployed on Vercel
+- **Backend**: Node.js + Express.js (TypeScript) — deployed on Vercel as a single Function
 - **Database**: MongoDB (Mongoose ODM)
 - **AI**: Google Gemini API (email generation)
 - **Data**: YouTube Data API v3
@@ -83,6 +83,34 @@ npm run dev
 
 - Backend: http://localhost:5000
 - Frontend: http://localhost:3000
+
+### 4. Deploy (Vercel — two projects from one repo)
+
+The repo root has no `package.json`, so **Root Directory matters** — create two Vercel projects from this repo.
+
+**Project 1 — Frontend**
+
+| Setting | Value |
+|---|---|
+| Root Directory | `frontend` |
+| Framework Preset | Next.js (auto-detected) |
+| Env var | `NEXT_PUBLIC_API_URL` = `https://<backend-project>.vercel.app/api` |
+
+**Project 2 — Backend**
+
+| Setting | Value |
+|---|---|
+| Root Directory | `backend` |
+| Framework Preset | Other — Vercel picks up `src/index.ts` (`export default app`) as one Function |
+| Build Command | `npm run build` |
+| Env vars | `MONGODB_URI`, `JWT_SECRET`, `FRONTEND_URL` (= `https://<frontend-project>.vercel.app`), plus optional `YOUTUBE_API_KEY`, `GEMINI_API_KEY`, `SMTP_*` |
+
+Notes:
+
+- `NEXT_PUBLIC_API_URL` is inlined at **build** time — after changing it you must **redeploy** the frontend.
+- It must be `https://…/api` with no trailing slash, otherwise the browser blocks the call and the UI only shows "Registration failed".
+- `FRONTEND_URL` decides which origins CORS allows. If it is wrong, every request from the site is rejected by the browser (login *and* register).
+- Keep `MONGODB_URI` / `JWT_SECRET` / `YOUTUBE_API_KEY` / `GEMINI_API_KEY` defined; `YOUTUBE_API_KEY` and `GEMINI_API_KEY` are optional but the others are required or the API will not boot.
 
 ## API Routes
 

@@ -5,16 +5,18 @@ interface RateLimitEntry {
   resetAt: number;
 }
 
+// Keyed by scope + client IP, so each limiter keeps its OWN counter.
 const rateLimitStore: Map<string, RateLimitEntry> = new Map();
 
 /**
  * Simple in-memory rate limiter.
  * @param maxRequests - Max requests per window
  * @param windowMs - Time window in milliseconds
+ * @param scope - Unique namespace so different limiters don't share a counter
  */
-export function rateLimit(maxRequests: number = 100, windowMs: number = 60000) {
+export function rateLimit(maxRequests: number = 100, windowMs: number = 60000, scope: string = 'default') {
   return (req: Request, res: Response, next: NextFunction): void => {
-    const key = req.ip || req.socket.remoteAddress || 'unknown';
+    const key = `${scope}:${req.ip || req.socket.remoteAddress || 'unknown'}`;
     const now = Date.now();
 
     let entry = rateLimitStore.get(key);
@@ -26,10 +28,12 @@ export function rateLimit(maxRequests: number = 100, windowMs: number = 60000) {
 
     entry.count++;
 
-    // Set rate limit headers
-    res.setHeader('X-RateLimit-Limit', maxRequests.toString());
-    res.setHeader('X-RateLimit-Remaining', Math.max(0, maxRequests - entry.count).toString());
-    res.setHeader('X-RateLimit-Reset', new Date(entry.resetAt).toISOString());
+    // Set rate limit headers (don't overwrite headers set by a narrower limiter)
+    if (!res.getHeader('X-RateLimit-Limit')) {
+      res.setHeader('X-RateLimit-Limit', maxRequests.toString());
+      res.setHeader('X-RateLimit-Remaining', Math.max(0, maxRequests - entry.count).toString());
+      res.setHeader('X-RateLimit-Reset', new Date(entry.resetAt).toISOString());
+    }
 
     if (entry.count > maxRequests) {
       res.status(429).json({
@@ -43,7 +47,8 @@ export function rateLimit(maxRequests: number = 100, windowMs: number = 60000) {
   };
 }
 
-// Cleanup old entries every 5 minutes
+// Cleanup old entries every 5 minutes.
+// .unref() so this timer never keeps a serverless function's event loop busy.
 setInterval(() => {
   const now = Date.now();
   for (const [key, entry] of rateLimitStore) {
@@ -51,4 +56,4 @@ setInterval(() => {
       rateLimitStore.delete(key);
     }
   }
-}, 300000);
+}, 300000).unref();
