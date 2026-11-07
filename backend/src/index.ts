@@ -61,6 +61,29 @@ app.use('/api/activity', activityRoutes);
 app.use('/api/billing', billingRoutes);
 app.use('/api/agent', agentRoutes);
 
+// Root route
+app.get('/', (_req, res) => {
+  res.json({
+    message: 'Ricoz Backend API',
+    version: '2.0.0',
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth',
+      brands: '/api/brands',
+      discovery: '/api/discovery',
+      outreach: '/api/outreach',
+      campaigns: '/api/campaigns',
+      negotiations: '/api/negotiations',
+      deliverables: '/api/deliverables',
+      analytics: '/api/analytics',
+      export: '/api/export',
+      activity: '/api/activity',
+      billing: '/api/billing',
+      agent: '/api/agent'
+    }
+  });
+});
+
 // Health check
 app.get('/api/health', (_req, res) => {
   res.json({
