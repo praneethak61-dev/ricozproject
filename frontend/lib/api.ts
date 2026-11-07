@@ -16,11 +16,14 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Handle 401 globally
+// Handle 401 globally — but never hard-redirect while already on an auth page,
+// otherwise a failed login attempt reloads the page and wipes the error message.
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401 && typeof window !== 'undefined') {
+    const onAuthPage =
+      typeof window !== 'undefined' && /^\/(login|register)/.test(window.location.pathname);
+    if (error.response?.status === 401 && typeof window !== 'undefined' && !onAuthPage) {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       window.location.href = '/login';

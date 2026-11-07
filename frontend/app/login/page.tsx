@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/lib/AuthContext';
+import { apiErrorMessage } from '@/lib/errorMessage';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -21,7 +22,7 @@ export default function LoginPage() {
       await login(email, password);
       router.push('/');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Login failed');
+      setError(apiErrorMessage(err, 'Login failed'));
     } finally {
       setLoading(false);
     }

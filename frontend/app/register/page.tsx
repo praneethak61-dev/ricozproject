@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/lib/AuthContext';
+import { apiErrorMessage } from '@/lib/errorMessage';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -22,7 +23,8 @@ export default function RegisterPage() {
       await register(name, email, password);
       router.push('/');
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Registration failed');
+      const message = apiErrorMessage(err, 'Registration failed');
+      setError(err.response?.status === 409 ? `${message} — try signing in instead.` : message);
     } finally {
       setLoading(false);
     }

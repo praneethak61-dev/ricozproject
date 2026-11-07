@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { Campaign, PipelineStage } from '../models/Campaign';
 import { Deliverable, DeliverableType } from '../models/Deliverable';
 import { logActivity } from './activityLog';
@@ -89,7 +90,7 @@ export async function closeAgreedDeal(
     finalRate?: number;
     currentOffer: number;
     campaignId: unknown;
-    brandId: unknown;
+    brandId: string | Types.ObjectId;
     creatorId: unknown;
   },
   creatorName: string,

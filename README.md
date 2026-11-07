@@ -8,8 +8,8 @@ Example instruction: “Find dog-training YouTubers with 10K to 100K followers, 
 
 ## Tech Stack
 
-- **Frontend**: Next.js 14 (TypeScript) — deployable on Vercel
-- **Backend**: Node.js + Express.js (TypeScript)
+- **Frontend**: Next.js (TypeScript) — deployed on Vercel
+- **Backend**: Node.js + Express.js (TypeScript) — deployed on Vercel as a single Function
 - **Database**: MongoDB (Mongoose ODM)
 - **AI**: Google Gemini API (email generation)
 - **Data**: YouTube Data API v3
@@ -52,8 +52,13 @@ npm install
 PORT=5000
 MONGODB_URI=mongodb+srv://<user>:<pass>@cluster.mongodb.net/influencer-agent
 JWT_SECRET=your-secret
-YOUTUBE_API_KEY=your-youtube-api-key
-GEMINI_API_KEY=your-gemini-api-key
+# CORS — must be the exact origin of the deployed frontend, e.g.
+# FRONTEND_URL=https://your-app.vercel.app
+FRONTEND_URL=http://localhost:3000
+# Optional: the API boots without these (auth/brands/campaigns keep working),
+# only YouTube discovery and AI email generation are disabled.
+YOUTUBE_API_KEY=your-youtube-data-api-v3-key
+GEMINI_API_KEY=your-google-gemini-api-key
 SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=your-email@gmail.com
@@ -83,6 +88,33 @@ npm run dev
 
 - Backend: http://localhost:5000
 - Frontend: http://localhost:3000
+
+### 4. Deploy (Vercel — two projects from one repo)
+
+The repo root has no `package.json`, so **Root Directory matters** — create two Vercel projects from this repo.
+
+**Project 1 — Frontend**
+
+| Setting | Value |
+|---|---|
+| Root Directory | `frontend` |
+| Framework Preset | Next.js (auto-detected) |
+| Env var | `NEXT_PUBLIC_API_URL` = `https://<backend-project>.vercel.app/api` |
+
+**Project 2 — Backend**
+
+| Setting | Value |
+|---|---|
+| Root Directory | `backend` |
+| Framework Preset | Other — Vercel picks up `src/index.ts` (`export default app`) as one Function |
+| Build Command | `npm run build` |
+| Env vars | `MONGODB_URI`, `JWT_SECRET`, `FRONTEND_URL` (= `https://<frontend-project>.vercel.app`), plus optional `YOUTUBE_API_KEY`, `GEMINI_API_KEY`, `SMTP_*` |
+
+**Notes:**
+- `NEXT_PUBLIC_API_URL` is inlined at **build** time — after changing it you must **redeploy** the frontend.
+- It must be `https://…/api` with no trailing slash, otherwise the browser blocks the call and the UI only shows "Registration failed".
+- `FRONTEND_URL` decides which origins CORS allows. If it is wrong, every request from the site is rejected by the browser (login *and* register).
+- Keep `MONGODB_URI` / `JWT_SECRET` / `YOUTUBE_API_KEY` / `GEMINI_API_KEY` defined; `YOUTUBE_API_KEY` and `GEMINI_API_KEY` are optional but the others are required or the API will not boot.
 
 ## API Routes
 
