@@ -14,6 +14,7 @@ function SidebarInner() {
 
   const links = [
     { href: '/', label: 'Dashboard', icon: '📊' },
+    { href: '/onboarding', label: 'Onboarding', icon: '🚀' },
     { href: '/agent', label: 'Ask the agent', icon: '✨' },
     { href: '/brands', label: 'Brands', icon: '🏷️' },
     { href: '/campaigns', label: 'Campaigns', icon: '📋' },
