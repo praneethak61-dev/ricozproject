@@ -5,6 +5,7 @@ import { useAuth } from '@/lib/AuthContext';
 import { apiErrorMessage } from '@/lib/errorMessage';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { GoogleOAuthButton } from '@/components/GoogleOAuth';
 
 export default function LoginPage() {
   const { login } = useAuth();
@@ -28,11 +29,6 @@ export default function LoginPage() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleGoogleLogin = () => {
-    // Google OAuth implementation - placeholder for now
-    alert('Google login will be implemented soon!');
   };
 
   return (
@@ -145,14 +141,9 @@ export default function LoginPage() {
             <div className="auth-modern-divider">
               <span>or</span>
             </div>
-            <button
-              type="button"
-              className="btn btn-outline btn-block btn-lg"
-              onClick={handleGoogleLogin}
-            >
-              <span className="google-icon">G</span>
-              Continue with Google
-            </button>
+            <div className="google-oauth-wrapper">
+              <GoogleOAuthButton />
+            </div>
           </div>
         </div>
       </div>

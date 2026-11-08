@@ -7,6 +7,7 @@ export interface IUser extends Document {
   passwordHash: string;
   name: string;
   role: UserRole;
+  googleId?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -22,7 +23,7 @@ const UserSchema = new Schema<IUser>(
     },
     passwordHash: {
       type: String,
-      required: true,
+      required: false,
     },
     name: {
       type: String,
@@ -33,6 +34,12 @@ const UserSchema = new Schema<IUser>(
       type: String,
       enum: ['admin', 'manager', 'viewer'],
       default: 'admin',
+    },
+    googleId: {
+      type: String,
+      required: false,
+      unique: true,
+      sparse: true,
     },
   },
   { timestamps: true }

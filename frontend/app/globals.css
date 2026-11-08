@@ -942,6 +942,17 @@ html, body {
   font-size: 0.75rem;
 }
 
+.google-oauth-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50px;
+}
+
+.google-oauth-wrapper iframe {
+  border-radius: var(--radius-sm) !important;
+}
+
 /* ─── MODERN AUTH RESPONSIVE ─── */
 @media (max-width: 1024px) {
   .auth-modern-left {
