@@ -13,6 +13,8 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,44 +30,131 @@ export default function LoginPage() {
     }
   };
 
+  const handleGoogleLogin = () => {
+    // Google OAuth implementation - placeholder for now
+    alert('Google login will be implemented soon!');
+  };
+
   return (
-    <div className="auth-page">
-      <div className="auth-card">
-        <h1 className="auth-title">Welcome Back</h1>
-        <p className="auth-subtitle">Sign in to Ricoz</p>
-        {error && <div className="alert alert-error">{error}</div>}
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label className="form-label">Email</label>
-            <input
-              id="login-email"
-              type="email"
-              className="form-input"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@company.com"
-              required
-            />
+    <div className="auth-modern">
+      <div className="auth-modern-left">
+        <div className="auth-modern-content">
+          <div className="auth-modern-logo">Ricoz</div>
+          <h1 className="auth-modern-title">Welcome to Ricoz</h1>
+          <p className="auth-modern-subtitle">
+            Streamline your influencer marketing campaigns with AI-powered discovery, 
+            automated outreach, and performance tracking.
+          </p>
+          <div className="auth-modern-features">
+            <div className="auth-modern-feature">
+              <div className="auth-modern-feature-icon">📊</div>
+              <div className="auth-modern-feature-text">Track Performance</div>
+            </div>
+            <div className="auth-modern-feature">
+              <div className="auth-modern-feature-icon">🎯</div>
+              <div className="auth-modern-feature-text">Find the Right Influencers</div>
+            </div>
+            <div className="auth-modern-feature">
+              <div className="auth-modern-feature-icon">🚀</div>
+              <div className="auth-modern-feature-text">Grow Your Brand</div>
+            </div>
           </div>
-          <div className="form-group">
-            <label className="form-label">Password</label>
-            <input
-              id="login-password"
-              type="password"
-              className="form-input"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              required
-            />
+          <div className="auth-modern-illustration">
+            <div className="auth-modern-laptop">
+              <div className="auth-modern-screen">
+                <div className="auth-modern-chart"></div>
+                <div className="auth-modern-chart-line"></div>
+              </div>
+            </div>
+            <div className="auth-modern-icons">
+              <div className="auth-modern-icon" style={{ fontSize: '24px' }}>▶️</div>
+              <div className="auth-modern-icon" style={{ fontSize: '24px' }}>📱</div>
+              <div className="auth-modern-icon" style={{ fontSize: '24px' }}>💬</div>
+            </div>
           </div>
-          <button id="login-submit" type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={loading}>
-            {loading ? <><span className="spinner" /> Signing in...</> : 'Sign In'}
-          </button>
-        </form>
-        <p className="auth-link">
-          Don&apos;t have an account? <Link href="/register">Sign up</Link>
-        </p>
+        </div>
+      </div>
+      <div className="auth-modern-right">
+        <div className="auth-modern-form-container">
+          <div className="auth-modern-header">
+            <Link href="/" className="auth-modern-logo-small">Ricoz</Link>
+            <Link href="/register" className="auth-modern-signup-link">
+              Don&apos;t have an account? Sign Up →
+            </Link>
+          </div>
+          <div className="auth-modern-form-wrapper">
+            <h2 className="auth-modern-form-title">Welcome Back</h2>
+            <p className="auth-modern-form-subtitle">Sign in to your Ricoz account</p>
+            {error && <div className="alert alert-error">{error}</div>}
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label className="form-label">Email Address</label>
+                <input
+                  id="login-email"
+                  type="email"
+                  className="form-input"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="you@company.com"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Password</label>
+                <div className="password-input-wrapper">
+                  <input
+                    id="login-password"
+                    type={showPassword ? 'text' : 'password'}
+                    className="form-input"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter your password"
+                    required
+                  />
+                  <button
+                    type="button"
+                    className="password-toggle"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? '🙈' : '👁️'}
+                  </button>
+                </div>
+              </div>
+              <div className="auth-modern-form-options">
+                <label className="checkbox-label">
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                  />
+                  <span>Remember me</span>
+                </label>
+                <Link href="/forgot-password" className="auth-modern-forgot">
+                  Forgot Password?
+                </Link>
+              </div>
+              <button
+                id="login-submit"
+                type="submit"
+                className="btn btn-primary btn-block btn-lg"
+                disabled={loading}
+              >
+                {loading ? <><span className="spinner" /> Signing in...</> : <>Sign In →</>}
+              </button>
+            </form>
+            <div className="auth-modern-divider">
+              <span>or</span>
+            </div>
+            <button
+              type="button"
+              className="btn btn-outline btn-block btn-lg"
+              onClick={handleGoogleLogin}
+            >
+              <span className="google-icon">G</span>
+              Continue with Google
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
