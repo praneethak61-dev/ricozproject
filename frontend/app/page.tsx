@@ -40,7 +40,184 @@ const STAGE_LABEL: Record<string, string> = {
   contracted: 'Contracted',
 };
 
-export default function DashboardPage() {
+function LandingPage() {
+  return (
+    <div className="landing-page">
+      <nav className="landing-nav">
+        <div className="nav-content">
+          <div className="logo">Ricoz</div>
+          <div className="nav-links">
+            <Link href="#features">Features</Link>
+            <Link href="#pricing">Pricing</Link>
+            <Link href="#how-it-works">How it Works</Link>
+          </div>
+          <div className="nav-buttons">
+            <Link href="/login" className="btn btn-outline">Sign In</Link>
+            <Link href="/register" className="btn btn-primary">Get Started</Link>
+          </div>
+        </div>
+      </nav>
+
+      <section className="hero">
+        <div className="hero-content">
+          <h1 className="hero-title">AI-Powered Influencer Marketing for Your Brand</h1>
+          <p className="hero-subtitle">
+            Find, rank, and connect with the perfect YouTube creators for your brand. 
+            Our AI agent handles discovery, outreach, and negotiation — all for a flat $1,500/month.
+          </p>
+          <div className="hero-cta">
+            <Link href="/register" className="btn btn-primary btn-lg">Start Free Trial</Link>
+            <Link href="#how-it-works" className="btn btn-outline btn-lg">See How It Works</Link>
+          </div>
+          <div className="hero-stats">
+            <div className="stat">
+              <div className="stat-number">10K+</div>
+              <div className="stat-label">Creators Indexed</div>
+            </div>
+            <div className="stat">
+              <div className="stat-number">95%</div>
+              <div className="stat-label">AI Match Accuracy</div>
+            </div>
+            <div className="stat">
+              <div className="stat-number">$1.5K</div>
+              <div className="stat-label">Flat Monthly Fee</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" className="features">
+        <div className="container">
+          <h2 className="section-title">Everything You Need to Scale Influencer Marketing</h2>
+          <div className="feature-grid">
+            <div className="feature-card">
+              <div className="feature-icon">🎯</div>
+              <h3>Smart Discovery</h3>
+              <p>AI searches YouTube to find creators that match your niche, audience, and budget requirements.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">📊</div>
+              <h3>Fit Scoring</h3>
+              <p>Our algorithm scores creators 0-100 based on niche match, engagement, and content consistency.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">✉️</div>
+              <h3>Personalized Outreach</h3>
+              <p>AI generates personalized outreach emails that convert. You approve, we send.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">💰</div>
+              <h3>Negotiation Support</h3>
+              <p>Handle commission negotiations with confidence. Track terms and agreements in one place.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">📈</div>
+              <h3>Performance Tracking</h3>
+              <p>Monitor deliverables, track live links, and measure ROI across all your campaigns.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">🔒</div>
+              <h3>Brand Safety</h3>
+              <p>Maintain a do-not-contact list and ensure your brand only partners with vetted creators.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="how-it-works" className="how-it-works">
+        <div className="container">
+          <h2 className="section-title">How Ricoz Works</h2>
+          <div className="steps">
+            <div className="step">
+              <div className="step-number">1</div>
+              <h3>Define Your Brief</h3>
+              <p>Tell our AI agent what you're looking for: niche, audience size, commission range, and brand tone.</p>
+            </div>
+            <div className="step">
+              <div className="step-number">2</div>
+              <h3>Review Creators</h3>
+              <p>Get a ranked list of YouTube creators with fit scores. Approve the ones you want to contact.</p>
+            </div>
+            <div className="step">
+              <div className="step-number">3</div>
+              <h3>Approve Outreach</h3>
+              <p>Review AI-generated personalized emails. Approve and we'll send them to your chosen creators.</p>
+            </div>
+            <div className="step">
+              <div className="step-number">4</div>
+              <h3>Track Results</h3>
+              <p>Monitor responses, negotiate deals, and track deliverables all in one dashboard.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing" className="pricing">
+        <div className="container">
+          <h2 className="section-title">Simple, Transparent Pricing</h2>
+          <div className="pricing-card">
+            <div className="pricing-header">
+              <h3>Pro Plan</h3>
+              <div className="price">$1,500<span>/month</span></div>
+              <p className="price-subtitle">Everything you need to scale influencer marketing</p>
+            </div>
+            <ul className="pricing-features">
+              <li>✓ Unlimited creator searches</li>
+              <li>✓ AI-powered fit scoring</li>
+              <li>✓ Personalized email generation</li>
+              <li>✓ Negotiation tracking</li>
+              <li>✓ Deliverable monitoring</li>
+              <li>✓ Analytics dashboard</li>
+              <li>✓ Priority support</li>
+            </ul>
+            <Link href="/register" className="btn btn-primary btn-block">Start Free Trial</Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="cta">
+        <div className="container">
+          <h2>Ready to Scale Your Influencer Marketing?</h2>
+          <p>Join hundreds of brands using Ricoz to find and partner with the perfect creators.</p>
+          <Link href="/register" className="btn btn-primary btn-lg">Get Started Now</Link>
+        </div>
+      </section>
+
+      <footer className="landing-footer">
+        <div className="container">
+          <div className="footer-content">
+            <div className="footer-section">
+              <h4>Ricoz</h4>
+              <p>AI-powered influencer marketing for D2C brands.</p>
+            </div>
+            <div className="footer-section">
+              <h4>Product</h4>
+              <Link href="#features">Features</Link>
+              <Link href="#pricing">Pricing</Link>
+              <Link href="#how-it-works">How it Works</Link>
+            </div>
+            <div className="footer-section">
+              <h4>Company</h4>
+              <Link href="#">About</Link>
+              <Link href="#">Blog</Link>
+              <Link href="#">Contact</Link>
+            </div>
+            <div className="footer-section">
+              <h4>Legal</h4>
+              <Link href="#">Privacy Policy</Link>
+              <Link href="#">Terms of Service</Link>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <p>&copy; 2024 Ricoz. All rights reserved.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+function DashboardPage() {
   const { user } = useAuth();
   const [overview, setOverview] = useState<Overview | null>(null);
   const [funnel, setFunnel] = useState<FunnelStage[]>([]);
@@ -179,4 +356,14 @@ export default function DashboardPage() {
       </div>
     </div>
   );
+}
+
+export default function HomePage() {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <div className="loading-page"><span className="spinner" /> Loading...</div>;
+  }
+
+  return user ? <DashboardPage /> : <LandingPage />;
 }
