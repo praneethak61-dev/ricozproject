@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { GoogleOAuthButton } from '@/components/GoogleOAuth';
 
+// Modern login page with split-screen design
 export default function LoginPage() {
   const { login } = useAuth();
   const router = useRouter();
