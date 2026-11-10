@@ -49,42 +49,35 @@ function LandingPage() {
 
   const testimonials = [
     {
-      name: "Sarah Chen",
-      role: "Marketing Director, TechStyle",
-      quote: "Ricoz saved us 20+ hours per week on influencer outreach. The AI scoring is incredibly accurate and our response rates have doubled.",
+      name: "Head of Growth, Ember Skin",
+      quote: "We cut creator sourcing time by days and finally had a repeatable workflow.",
     },
     {
-      name: "Michael Rodriguez",
-      role: "Founder, GlowBeauty",
-      quote: "We've scaled from 10 to 100+ influencer partnerships in just 3 months. The platform handles everything from discovery to tracking.",
+      name: "Founder, Loom & Lane",
+      quote: "The fit scores helped us focus outreach on creators that actually convert.",
     },
     {
-      name: "Emily Watson",
-      role: "E-commerce Manager, FitLife",
-      quote: "The personalized email generation is a game-changer. Our conversion rate from outreach to partnership increased by 40%.",
+      name: "Marketing Lead, North & Finch",
+      quote: "Ricoz replaced three spreadsheets and made campaign tracking painless.",
     },
   ];
 
   const faqs = [
     {
-      question: "How does the AI find the right creators?",
-      answer: "Our AI analyzes millions of YouTube creators using advanced algorithms that match based on niche, audience demographics, engagement rates, content quality, and brand safety. You can also set custom criteria like audience size, geographic location, and content themes.",
+      question: "How does the AI work?",
+      answer: "It analyzes creator profiles, engagement patterns, and your brief to rank the best matches.",
     },
     {
-      question: "Can I integrate Ricoz with my existing tools?",
-      answer: "Yes! Ricoz integrates with popular marketing tools like HubSpot, Salesforce, and Shopify. We also offer API access for custom integrations with your existing workflow and analytics stack.",
+      question: "Can it integrate with existing tools?",
+      answer: "Yes. Ricoz fits into your current outreach and reporting workflow without replacing your stack.",
     },
     {
       question: "How do you ensure creator quality?",
-      answer: "We use a multi-layered vetting process including AI analysis of content quality, engagement authenticity, audience demographics, and brand safety checks. You also maintain a do-not-contact list to avoid repeat contacts.",
+      answer: "We combine AI scoring with brand safety checks and your own approval step.",
     },
     {
-      question: "What kind of support do you offer?",
-      answer: "All plans include priority email support, dedicated onboarding sessions, and access to our knowledge base. Enterprise plans include a dedicated account manager and 24/7 phone support.",
-    },
-    {
-      question: "Can I cancel anytime?",
-      answer: "Yes, you can cancel your subscription at any time with no long-term commitment. We offer a 30-day money-back guarantee so you can try Ricoz risk-free.",
+      question: "What support is included?",
+      answer: "Priority support is included with onboarding guidance and campaign help when needed.",
     },
   ];
 
@@ -95,14 +88,12 @@ function LandingPage() {
           <div className="logo">Ricoz</div>
           <div className="nav-links">
             <Link href="#features">Features</Link>
-            <Link href="#how-it-works">How it Works</Link>
-            <Link href="#testimonials">Testimonials</Link>
+            <Link href="#how-it-works">How It Works</Link>
             <Link href="#pricing">Pricing</Link>
             <Link href="#faq">FAQ</Link>
           </div>
           <div className="nav-buttons">
-            <Link href="/login" className="btn btn-outline">Sign In</Link>
-            <Link href="/register" className="btn btn-primary">Get Started</Link>
+            <Link href="#pricing" className="btn btn-primary">Start Free Trial</Link>
           </div>
         </div>
       </nav>
@@ -110,51 +101,49 @@ function LandingPage() {
       <section className="hero">
         <div className="hero-content">
           <div className="hero-text">
-            <h1 className="hero-title">AI-Powered Influencer Marketing for Your Brand</h1>
+            <p className="hero-tagline">AI-powered influencer marketing for D2C brands</p>
+            <h1 className="hero-title">Scale creator campaigns without the busywork.</h1>
             <p className="hero-subtitle">
-              Find, rank, and connect with the perfect YouTube creators for your brand. 
-              Our AI agent handles discovery, outreach, and negotiation — all for a flat $1,500/month.
+              Ricoz finds the right creators, writes personalized outreach, tracks negotiations, and monitors
+              performance so your team can launch more campaigns with less manual effort.
             </p>
             <div className="hero-cta">
-              <Link href="/register" className="btn btn-primary btn-lg">Start Free Trial</Link>
+              <Link href="#pricing" className="btn btn-primary btn-lg">Start Free Trial</Link>
               <Link href="#how-it-works" className="btn btn-outline btn-lg">See How It Works</Link>
             </div>
             <div className="hero-stats">
               <div className="stat">
                 <div className="stat-number">10K+</div>
-                <div className="stat-label">Creators Indexed</div>
+                <div className="stat-label">Creators indexed</div>
               </div>
               <div className="stat">
                 <div className="stat-number">95%</div>
-                <div className="stat-label">AI Match Accuracy</div>
+                <div className="stat-label">AI match accuracy</div>
               </div>
               <div className="stat">
                 <div className="stat-number">$1.5K</div>
-                <div className="stat-label">Flat Monthly Fee</div>
+                <div className="stat-label">Flat monthly fee</div>
               </div>
             </div>
           </div>
           <div className="hero-illustration">
-            <div className="hero-dashboard-mockup">
-              <div className="mockup-header">
-                <div className="mockup-dots">
-                  <span></span>
-                  <span></span>
-                  <span></span>
+            <div className="hero-match-engine">
+              <div className="match-engine-badge">Campaign Match Engine</div>
+              <div className="match-engine-live">Live</div>
+              <div className="match-engine-content">
+                <div className="match-engine-step">
+                  <div className="match-engine-status">○</div>
+                  <div className="match-engine-text">
+                    <div className="match-engine-title">Creator shortlist</div>
+                    <div className="match-engine-desc">Ranked by fit score, audience, and engagement.</div>
+                  </div>
                 </div>
-              </div>
-              <div className="mockup-content">
-                <div className="mockup-stat">
-                  <div className="mockup-stat-value">847</div>
-                  <div className="mockup-stat-label">Creators Found</div>
-                </div>
-                <div className="mockup-stat">
-                  <div className="mockup-stat-value">92%</div>
-                  <div className="mockup-stat-label">Avg Fit Score</div>
-                </div>
-                <div className="mockup-stat">
-                  <div className="mockup-stat-value">156</div>
-                  <div className="mockup-stat-label">Emails Sent</div>
+                <div className="match-engine-step">
+                  <div className="match-engine-status">◌</div>
+                  <div className="match-engine-text">
+                    <div className="match-engine-title">Outreach ready</div>
+                    <div className="match-engine-desc">Review AI-written emails before sending.</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -164,38 +153,38 @@ function LandingPage() {
 
       <section id="features" className="features">
         <div className="container">
-          <h2 className="section-title">Everything You Need to Scale Influencer Marketing</h2>
-          <p className="section-subtitle">Powerful features designed to automate and optimize your entire influencer marketing workflow</p>
+          <h2 className="section-title">Built for the full influencer workflow</h2>
+          <p className="section-subtitle">Everything in one platform, from creator discovery to tracking results.</p>
           <div className="feature-grid">
             <div className="feature-card">
-              <div className="feature-icon">🎯</div>
-              <h3>Smart Discovery</h3>
-              <p>AI searches YouTube to find creators that match your niche, audience, and budget requirements with 95% accuracy.</p>
+              <div className="feature-icon">◎</div>
+              <h3>Smart Creator Discovery</h3>
+              <p>AI searches YouTube to find creators that match your brand, niche, and audience criteria.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">📊</div>
+              <div className="feature-icon">◌</div>
               <h3>AI Fit Scoring</h3>
-              <p>Our algorithm scores creators 0-100 based on niche match (40%), engagement (35%), and content consistency (25%).</p>
+              <p>Every creator gets a 0-100 score based on niche match, engagement, and content consistency.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">✉️</div>
+              <div className="feature-icon">✦</div>
               <h3>Personalized Outreach</h3>
-              <p>AI generates personalized outreach emails that convert. You approve, we send. Response rates up 40% higher.</p>
+              <p>Generate tailored email templates that feel human and improve response rates.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">💰</div>
+              <div className="feature-icon">▣</div>
               <h3>Negotiation Support</h3>
-              <p>Handle commission negotiations with confidence. Track terms, rates, and agreements all in one centralized dashboard.</p>
+              <p>Track terms, commission rates, and agreement status in one organized view.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">📈</div>
+              <div className="feature-icon">▤</div>
               <h3>Performance Tracking</h3>
-              <p>Monitor deliverables, track live links, and measure ROI across all your campaigns with real-time analytics.</p>
+              <p>Monitor deliverables, live links, and ROI without spreadsheet chaos.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">🔒</div>
+              <div className="feature-icon">⬢</div>
               <h3>Brand Safety</h3>
-              <p>Maintain a do-not-contact list and ensure your brand only partners with vetted, safe creators.</p>
+              <p>Maintain do-not-contact lists and vet creators before every campaign launch.</p>
             </div>
           </div>
         </div>
@@ -203,47 +192,68 @@ function LandingPage() {
 
       <section id="how-it-works" className="how-it-works">
         <div className="container">
-          <h2 className="section-title">How Ricoz Works</h2>
-          <p className="section-subtitle">From brief to partnership in 4 simple steps</p>
+          <h2 className="section-title">How it works</h2>
+          <p className="section-subtitle">From brief to results in four simple steps.</p>
           <div className="steps">
             <div className="step">
               <div className="step-number">1</div>
               <h3>Define Your Brief</h3>
-              <p>Tell our AI agent what you're looking for: niche, audience size, commission range, and brand tone. Set your criteria in minutes.</p>
+              <p>Tell AI what you need: niche, audience, budget, and campaign goals.</p>
             </div>
             <div className="step">
               <div className="step-number">2</div>
               <h3>Review Creators</h3>
-              <p>Get a ranked list of YouTube creators with fit scores. Review profiles, engagement metrics, and approve the ones you want to contact.</p>
+              <p>Get a ranked list with fit scores, then approve who should be contacted.</p>
             </div>
             <div className="step">
               <div className="step-number">3</div>
               <h3>Approve Outreach</h3>
-              <p>Review AI-generated personalized emails. Approve and we'll send them to your chosen creators. One-click or bulk approval.</p>
+              <p>Review AI-generated emails and approve the versions you want sent.</p>
             </div>
             <div className="step">
               <div className="step-number">4</div>
               <h3>Track Results</h3>
-              <p>Monitor responses, negotiate deals, and track deliverables all in one dashboard. Real-time updates and analytics.</p>
+              <p>Monitor replies, negotiate deals, and keep deliverables on schedule.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="testimonials" className="testimonials">
+      <section id="pricing" className="pricing">
         <div className="container">
-          <h2 className="section-title">Trusted by Growing Brands</h2>
-          <p className="section-subtitle">See what D2C brand owners are saying about Ricoz</p>
+          <h2 className="section-title">Simple pricing</h2>
+          <div className="pricing-card">
+            <div className="pricing-header">
+              <div className="price">$1,500</div>
+              <p className="price-subtitle">Per month, flat rate. No hidden usage charges.</p>
+            </div>
+            <Link href="#cta" className="btn btn-primary btn-block">Start Free Trial</Link>
+            <div className="pricing-included">
+              <h3>Everything included</h3>
+              <ul className="pricing-features">
+                <li>• Unlimited creator searches</li>
+                <li>• AI-powered fit scoring</li>
+                <li>• Personalized email generation</li>
+                <li>• Negotiation tracking</li>
+                <li>• Deliverable monitoring</li>
+                <li>• Analytics dashboard</li>
+                <li>• Priority support</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="testimonials">
+        <div className="container">
+          <h2 className="section-title">Trusted by D2C teams</h2>
+          <p className="section-subtitle">Customers use Ricoz to save time and improve campaign execution.</p>
           <div className="testimonial-grid">
             {testimonials.map((testimonial, index) => (
               <div key={index} className="testimonial-card">
                 <div className="testimonial-quote">"{testimonial.quote}"</div>
                 <div className="testimonial-author">
-                  <div className="testimonial-avatar">{testimonial.name.charAt(0)}</div>
-                  <div className="testimonial-info">
-                    <div className="testimonial-name">{testimonial.name}</div>
-                    <div className="testimonial-role">{testimonial.role}</div>
-                  </div>
+                  <div className="testimonial-name">{testimonial.name}</div>
                 </div>
               </div>
             ))}
@@ -251,37 +261,10 @@ function LandingPage() {
         </div>
       </section>
 
-      <section id="pricing" className="pricing">
-        <div className="container">
-          <h2 className="section-title">Simple, Transparent Pricing</h2>
-          <p className="section-subtitle">One flat price. Everything included. No hidden fees.</p>
-          <div className="pricing-card">
-            <div className="pricing-badge">Most Popular</div>
-            <div className="pricing-header">
-              <h3>Pro Plan</h3>
-              <div className="price">$1,500<span>/month</span></div>
-              <p className="price-subtitle">Everything you need to scale influencer marketing</p>
-            </div>
-            <ul className="pricing-features">
-              <li>✓ Unlimited creator searches</li>
-              <li>✓ AI-powered fit scoring</li>
-              <li>✓ Personalized email generation</li>
-              <li>✓ Negotiation tracking</li>
-              <li>✓ Deliverable monitoring</li>
-              <li>✓ Analytics dashboard</li>
-              <li>✓ Priority support</li>
-              <li>✓ API access</li>
-            </ul>
-            <Link href="/register" className="btn btn-primary btn-block">Start Free Trial</Link>
-            <p className="pricing-note">30-day money-back guarantee • No credit card required</p>
-          </div>
-        </div>
-      </section>
-
       <section id="faq" className="faq">
         <div className="container">
-          <h2 className="section-title">Frequently Asked Questions</h2>
-          <p className="section-subtitle">Everything you need to know about Ricoz</p>
+          <h2 className="section-title">FAQ</h2>
+          <p className="section-subtitle">Common questions about the platform and support.</p>
           <div className="faq-list">
             {faqs.map((faq, index) => (
               <div key={index} className="faq-item">
@@ -301,12 +284,11 @@ function LandingPage() {
         </div>
       </section>
 
-      <section className="cta">
+      <section id="cta" className="cta">
         <div className="container">
-          <h2>Ready to Scale Your Influencer Marketing?</h2>
-          <p>Join hundreds of D2C brands using Ricoz to find and partner with the perfect creators. Start your free trial today.</p>
-          <Link href="/register" className="btn btn-primary btn-lg">Get Started Now</Link>
-          <p className="cta-note">No credit card required • 30-day money-back guarantee</p>
+          <h2>Ready to scale your influencer marketing?</h2>
+          <p>Join brands using Ricoz to move faster, stay organized, and get better creator matches.</p>
+          <Link href="#pricing" className="btn btn-primary btn-lg">Get Started Now</Link>
         </div>
       </section>
 
@@ -315,36 +297,20 @@ function LandingPage() {
           <div className="footer-content">
             <div className="footer-section">
               <h4>Ricoz</h4>
-              <p>AI-powered influencer marketing for D2C brands. Scale your partnerships with confidence.</p>
-              <div className="footer-social">
-                <a href="#" aria-label="Twitter">𝕊</a>
-                <a href="#" aria-label="LinkedIn">in</a>
-                <a href="#" aria-label="Instagram">📷</a>
-              </div>
             </div>
             <div className="footer-section">
-              <h4>Product</h4>
               <Link href="#features">Features</Link>
               <Link href="#pricing">Pricing</Link>
-              <Link href="#how-it-works">How it Works</Link>
-              <Link href="#testimonials">Testimonials</Link>
+              <Link href="#how-it-works">How It Works</Link>
             </div>
             <div className="footer-section">
-              <h4>Company</h4>
-              <Link href="#">About</Link>
-              <Link href="#">Blog</Link>
-              <Link href="#">Careers</Link>
-              <Link href="#">Contact</Link>
-            </div>
-            <div className="footer-section">
-              <h4>Legal</h4>
-              <Link href="#">Privacy Policy</Link>
-              <Link href="#">Terms of Service</Link>
-              <Link href="#">Cookie Policy</Link>
+              <Link href="#faq">About</Link>
+              <Link href="#faq">Blog</Link>
+              <Link href="#faq">Contact</Link>
             </div>
           </div>
           <div className="footer-bottom">
-            <p>&copy; 2024 Ricoz. All rights reserved.</p>
+            <p>© 2026 Ricoz. <Link href="#faq">Privacy Policy</Link> · <Link href="#faq">Terms of Service</Link></p>
           </div>
         </div>
       </footer>
