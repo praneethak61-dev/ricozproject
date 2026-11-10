@@ -37,10 +37,10 @@ export default function LoginPage() {
       <div className="auth-modern-left">
         <div className="auth-modern-content">
           <div className="auth-modern-logo">Ricoz</div>
-          <h1 className="auth-modern-title">Welcome to Ricoz</h1>
+          <div className="auth-modern-tagline">Smarter Growth. Together.</div>
+          <h1 className="auth-modern-title">Welcome to <span className="auth-modern-underline">Ricoz</span></h1>
           <p className="auth-modern-subtitle">
-            Streamline your influencer marketing campaigns with AI-powered discovery, 
-            automated outreach, and performance tracking.
+            Streamline your influencer campaigns, connect with the right creators, and grow your brand effortlessly.
           </p>
           <div className="auth-modern-features">
             <div className="auth-modern-feature">
@@ -59,14 +59,16 @@ export default function LoginPage() {
           <div className="auth-modern-illustration">
             <div className="auth-modern-laptop">
               <div className="auth-modern-screen">
+                <div className="auth-modern-screen-logo">Ricoz</div>
                 <div className="auth-modern-chart"></div>
                 <div className="auth-modern-chart-line"></div>
               </div>
             </div>
             <div className="auth-modern-icons">
-              <div className="auth-modern-icon" style={{ fontSize: '24px' }}>▶️</div>
-              <div className="auth-modern-icon" style={{ fontSize: '24px' }}>📱</div>
-              <div className="auth-modern-icon" style={{ fontSize: '24px' }}>💬</div>
+              <div className="auth-modern-icon youtube">▶️</div>
+              <div className="auth-modern-icon instagram">📷</div>
+              <div className="auth-modern-icon chart">�</div>
+              <div className="auth-modern-icon users">�</div>
             </div>
           </div>
         </div>
@@ -80,25 +82,30 @@ export default function LoginPage() {
             </Link>
           </div>
           <div className="auth-modern-form-wrapper">
+            <div className="auth-modern-form-logo">Ricoz</div>
             <h2 className="auth-modern-form-title">Welcome Back</h2>
             <p className="auth-modern-form-subtitle">Sign in to your Ricoz account</p>
             {error && <div className="alert alert-error">{error}</div>}
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label className="form-label">Email Address</label>
-                <input
-                  id="login-email"
-                  type="email"
-                  className="form-input"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@company.com"
-                  required
-                />
+                <div className="input-with-icon">
+                  <span className="input-icon">📧</span>
+                  <input
+                    id="login-email"
+                    type="email"
+                    className="form-input"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@company.com"
+                    required
+                  />
+                </div>
               </div>
               <div className="form-group">
                 <label className="form-label">Password</label>
-                <div className="password-input-wrapper">
+                <div className="input-with-icon">
+                  <span className="input-icon">🔒</span>
                   <input
                     id="login-password"
                     type={showPassword ? 'text' : 'password'}
@@ -136,7 +143,7 @@ export default function LoginPage() {
                 className="btn btn-primary btn-block btn-lg"
                 disabled={loading}
               >
-                {loading ? <><span className="spinner" /> Signing in...</> : <>Sign In →</>}
+                {loading ? <><span className="spinner" /> Signing in...</> : <>→ Sign In</>}
               </button>
             </form>
             <div className="auth-modern-divider">
@@ -145,6 +152,9 @@ export default function LoginPage() {
             <div className="google-oauth-wrapper">
               <GoogleOAuthButton />
             </div>
+            <p className="auth-modern-form-footer">
+              Don&apos;t have an account? <Link href="/register">Sign Up</Link>
+            </p>
           </div>
         </div>
       </div>
