@@ -41,109 +41,35 @@ const STAGE_LABEL: Record<string, string> = {
 };
 
 function LandingPage() {
-  const [activeFaq, setActiveFaq] = useState<number | null>(null);
-
-  const toggleFaq = (index: number) => {
-    setActiveFaq(activeFaq === index ? null : index);
-  };
-
-  const testimonials = [
-    {
-      name: "Head of Growth, Ember Skin",
-      quote: "We cut creator sourcing time by days and finally had a repeatable workflow.",
-    },
-    {
-      name: "Founder, Loom & Lane",
-      quote: "The fit scores helped us focus outreach on creators that actually convert.",
-    },
-    {
-      name: "Marketing Lead, North & Finch",
-      quote: "Ricoz replaced three spreadsheets and made campaign tracking painless.",
-    },
-  ];
-
-  const faqs = [
-    {
-      question: "How does the AI work?",
-      answer: "It analyzes creator profiles, engagement patterns, and your brief to rank the best matches.",
-    },
-    {
-      question: "Can it integrate with existing tools?",
-      answer: "Yes. Ricoz fits into your current outreach and reporting workflow without replacing your stack.",
-    },
-    {
-      question: "How do you ensure creator quality?",
-      answer: "We combine AI scoring with brand safety checks and your own approval step.",
-    },
-    {
-      question: "What support is included?",
-      answer: "Priority support is included with onboarding guidance and campaign help when needed.",
-    },
-  ];
-
   return (
-    <div className="landing-page">
-      <nav className="landing-nav">
-        <div className="nav-content">
-          <div className="logo">Ricoz</div>
-          <div className="nav-links">
-            <Link href="#features">Features</Link>
-            <Link href="#how-it-works">How It Works</Link>
-            <Link href="#pricing">Pricing</Link>
-            <Link href="#faq">FAQ</Link>
-          </div>
-          <div className="nav-buttons">
-            <Link href="#pricing" className="btn btn-primary">Start Free Trial</Link>
-          </div>
-        </div>
-      </nav>
-
-      <section className="hero">
+    <div className="landing-page-new">
+      {/* Hero Section */}
+      <section className="hero-section">
+        <div className="hero-top-tag">RICOZ AI-POWERED CREATOR MARKETING</div>
         <div className="hero-content">
-          <div className="hero-text">
-            <p className="hero-tagline">AI-powered influencer marketing for D2C brands</p>
-            <h1 className="hero-title">Scale creator campaigns without the busywork.</h1>
-            <p className="hero-subtitle">
-              Ricoz finds the right creators, writes personalized outreach, tracks negotiations, and monitors
-              performance so your team can launch more campaigns with less manual effort.
+          <div className="hero-left">
+            <h1 className="hero-title">Influencer marketing, run by AI</h1>
+            <p className="hero-description">
+              Ricoz helps D2C brands find the right creators, automate outreach, and track every campaign from one workspace.
             </p>
-            <div className="hero-cta">
-              <Link href="#pricing" className="btn btn-primary btn-lg">Start Free Trial</Link>
-              <Link href="#how-it-works" className="btn btn-outline btn-lg">See How It Works</Link>
+            <div className="hero-buttons">
+              <Link href="/login" className="btn-primary">Start Free Trial</Link>
+              <Link href="#how-it-works" className="btn-secondary">See How It Works</Link>
             </div>
-            <div className="hero-stats">
-              <div className="stat">
-                <div className="stat-number">10K+</div>
-                <div className="stat-label">Creators indexed</div>
-              </div>
-              <div className="stat">
-                <div className="stat-number">95%</div>
-                <div className="stat-label">AI match accuracy</div>
-              </div>
-              <div className="stat">
-                <div className="stat-number">$1.5K</div>
-                <div className="stat-label">Flat monthly fee</div>
-              </div>
-            </div>
+            <div className="hero-stat">10K+ CREATORS INDEXED</div>
           </div>
-          <div className="hero-illustration">
-            <div className="hero-match-engine">
-              <div className="match-engine-badge">Campaign Match Engine</div>
-              <div className="match-engine-live">Live</div>
-              <div className="match-engine-content">
-                <div className="match-engine-step">
-                  <div className="match-engine-status">○</div>
-                  <div className="match-engine-text">
-                    <div className="match-engine-title">Creator shortlist</div>
-                    <div className="match-engine-desc">Ranked by fit score, audience, and engagement.</div>
-                  </div>
-                </div>
-                <div className="match-engine-step">
-                  <div className="match-engine-status">◌</div>
-                  <div className="match-engine-text">
-                    <div className="match-engine-title">Outreach ready</div>
-                    <div className="match-engine-desc">Review AI-written emails before sending.</div>
-                  </div>
+          <div className="hero-right">
+            <div className="hero-illustration">
+              <div className="illustration-placeholder">
+                <div className="mini-scene">
+                  <div className="scene-base"></div>
+                  <div className="scene-paper"></div>
+                  <div className="scene-figure figure-1"></div>
+                  <div className="scene-figure figure-2"></div>
+                  <div className="scene-figure figure-3"></div>
+                  <div className="scene-card card-1"></div>
+                  <div className="scene-card card-2"></div>
+                  <div className="scene-card card-3"></div>
                 </div>
               </div>
             </div>
@@ -151,169 +77,203 @@ function LandingPage() {
         </div>
       </section>
 
-      <section id="features" className="features">
-        <div className="container">
-          <h2 className="section-title">Built for the full influencer workflow</h2>
-          <p className="section-subtitle">Everything in one platform, from creator discovery to tracking results.</p>
-          <div className="feature-grid">
-            <div className="feature-card">
-              <div className="feature-icon">◎</div>
-              <h3>Smart Creator Discovery</h3>
-              <p>AI searches YouTube to find creators that match your brand, niche, and audience criteria.</p>
+      {/* Platform Section */}
+      <section className="platform-section">
+        <div className="platform-content">
+          <div className="platform-left">
+            <h2 className="platform-title">One platform for the work behind every creator partnership</h2>
+            <p className="platform-description">
+              Replace manual follow-ups, scattered spreadsheets, and lost threads with a single AI-powered influencer workflow.
+            </p>
+            <div className="platform-features">
+              <div className="platform-feature">
+                <div className="feature-icon icon-discover"></div>
+                <div className="feature-text">
+                  <h3>Discover faster</h3>
+                  <p>AI searches YouTube to surface creators that match your niche, audience, and brand criteria.</p>
+                </div>
+              </div>
+              <div className="platform-feature">
+                <div className="feature-icon icon-work"></div>
+                <div className="feature-text">
+                  <h3>Move without busywork</h3>
+                  <p>Generate personalized outreach, track negotiations, and monitor deliverables automatically.</p>
+                </div>
+              </div>
+              <div className="platform-feature">
+                <div className="feature-icon icon-deliver"></div>
+                <div className="feature-text">
+                  <h3>See what delivers</h3>
+                  <p>Track live links, engagement, and ROI in one dashboard instead of endless spreadsheets.</p>
+                </div>
+              </div>
             </div>
-            <div className="feature-card">
-              <div className="feature-icon">◌</div>
+          </div>
+          <div className="platform-right">
+            <div className="corkboard-illustration">
+              <div className="corkboard">
+                <div className="corkboard-string string-1"></div>
+                <div className="corkboard-string string-2"></div>
+                <div className="corkboard-string string-3"></div>
+                <div className="corkboard-note note-1"></div>
+                <div className="corkboard-note note-2"></div>
+                <div className="corkboard-note note-3"></div>
+                <div className="corkboard-lamp"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Grid Section */}
+      <section className="features-grid-section">
+        <div className="features-grid-content">
+          <h2 className="features-title">Everything you need to scale creator campaigns</h2>
+          <p className="features-subtitle">
+            One connected system for finding partners, starting conversations, managing terms, and measuring the work after it goes live.
+          </p>
+          <div className="features-cards">
+            <div className="feature-card-new">
+              <div className="card-icon">🔍</div>
+              <h3>Smart Creator Discovery</h3>
+              <p>AI searches YouTube for creators that match your niche, audience, and brand criteria.</p>
+            </div>
+            <div className="feature-card-new">
+              <div className="card-icon">📊</div>
               <h3>AI Fit Scoring</h3>
               <p>Every creator gets a 0-100 score based on niche match, engagement, and content consistency.</p>
             </div>
-            <div className="feature-card">
-              <div className="feature-icon">✦</div>
+            <div className="feature-card-new">
+              <div className="card-icon">✉️</div>
               <h3>Personalized Outreach</h3>
-              <p>Generate tailored email templates that feel human and improve response rates.</p>
+              <p>Generate tailored email templates that sound like your brand.</p>
             </div>
-            <div className="feature-card">
-              <div className="feature-icon">▣</div>
+            <div className="feature-card-new">
+              <div className="card-icon">🤝</div>
               <h3>Negotiation Support</h3>
-              <p>Track terms, commission rates, and agreement status in one organized view.</p>
+              <p>Track terms, commission rates, and agreements as conversations progress.</p>
             </div>
-            <div className="feature-card">
-              <div className="feature-icon">▤</div>
+            <div className="feature-card-new">
+              <div className="card-icon">📈</div>
               <h3>Performance Tracking</h3>
-              <p>Monitor deliverables, live links, and ROI without spreadsheet chaos.</p>
+              <p>Monitor deliverables, live links, responses, and ROI.</p>
             </div>
-            <div className="feature-card">
-              <div className="feature-icon">⬢</div>
+            <div className="feature-card-new">
+              <div className="card-icon">🛡️</div>
               <h3>Brand Safety</h3>
-              <p>Maintain do-not-contact lists and vet creators before every campaign launch.</p>
+              <p>Vet creators and maintain a do-not-contact list.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="how-it-works" className="how-it-works">
-        <div className="container">
-          <h2 className="section-title">How it works</h2>
-          <p className="section-subtitle">From brief to results in four simple steps.</p>
-          <div className="steps">
-            <div className="step">
-              <div className="step-number">1</div>
-              <h3>Define Your Brief</h3>
-              <p>Tell AI what you need: niche, audience, budget, and campaign goals.</p>
+      {/* How It Works Section */}
+      <section id="how-it-works" className="how-it-works-section">
+        <div className="how-it-works-content">
+          <div className="how-it-works-left">
+            <h2 className="how-title">From brief to live campaign in four clear steps</h2>
+            <p className="how-description">
+              Ricoz keeps the human decisions visible while AI handles the repetitive work around them.
+            </p>
+            <div className="steps-flow">
+              <div className="step-flow-item">
+                <div className="step-arrow">→</div>
+                <div className="step-content">
+                  <h3>Define Brief</h3>
+                  <p>Tell AI what you're looking for: niche, audience, budget, and campaign goals.</p>
+                </div>
+              </div>
+              <div className="step-flow-item">
+                <div className="step-arrow">→</div>
+                <div className="step-content">
+                  <h3>Review Creators</h3>
+                  <p>Get a ranked list with fit scores, then approve who to contact.</p>
+                </div>
+              </div>
+              <div className="step-flow-item">
+                <div className="step-arrow">→</div>
+                <div className="step-content">
+                  <h3>Approve Outreach</h3>
+                  <p>Review AI-generated emails, approve, and send with one click.</p>
+                </div>
+              </div>
+              <div className="step-flow-item">
+                <div className="step-arrow">→</div>
+                <div className="step-content">
+                  <h3>Track Results</h3>
+                  <p>Monitor responses, negotiate deals, and track deliverables in real-time.</p>
+                </div>
+              </div>
             </div>
-            <div className="step">
-              <div className="step-number">2</div>
-              <h3>Review Creators</h3>
-              <p>Get a ranked list with fit scores, then approve who should be contacted.</p>
-            </div>
-            <div className="step">
-              <div className="step-number">3</div>
-              <h3>Approve Outreach</h3>
-              <p>Review AI-generated emails and approve the versions you want sent.</p>
-            </div>
-            <div className="step">
-              <div className="step-number">4</div>
-              <h3>Track Results</h3>
-              <p>Monitor replies, negotiate deals, and keep deliverables on schedule.</p>
+          </div>
+          <div className="how-it-works-right">
+            <div className="diorama-illustration">
+              <div className="diorama-scene">
+                <div className="diorama-ground"></div>
+                <div className="diorama-building building-1"></div>
+                <div className="diorama-building building-2"></div>
+                <div className="diorama-tree tree-1"></div>
+                <div className="diorama-tree tree-2"></div>
+                <div className="diorama-paper">
+                  <div className="paper-text">Greater Brief</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="pricing" className="pricing">
-        <div className="container">
-          <h2 className="section-title">Simple pricing</h2>
-          <div className="pricing-card">
-            <div className="pricing-header">
-              <div className="price">$1,500</div>
-              <p className="price-subtitle">Per month, flat rate. No hidden usage charges.</p>
-            </div>
-            <Link href="#cta" className="btn btn-primary btn-block">Start Free Trial</Link>
-            <div className="pricing-included">
-              <h3>Everything included</h3>
-              <ul className="pricing-features">
-                <li>• Unlimited creator searches</li>
-                <li>• AI-powered fit scoring</li>
-                <li>• Personalized email generation</li>
-                <li>• Negotiation tracking</li>
-                <li>• Deliverable monitoring</li>
-                <li>• Analytics dashboard</li>
-                <li>• Priority support</li>
+      {/* Pricing Section */}
+      <section className="pricing-section">
+        <div className="pricing-content">
+          <div className="pricing-left">
+            <div className="pricing-badge">SIMPLE, PREDICTABLE PRICING</div>
+            <h2 className="pricing-title">One flat price. No agency markup.</h2>
+            <p className="pricing-description">
+              Everything Ricoz offers is included in one predictable subscription.
+            </p>
+            <Link href="/login" className="btn-pricing">Start Free Trial</Link>
+          </div>
+          <div className="pricing-right">
+            <div className="pricing-card-new">
+              <div className="pricing-header">
+                <h3>THE RICOZ PLAN</h3>
+                <div className="price-amount">$1,500 <span className="price-period">PER MONTH</span></div>
+              </div>
+              <ul className="pricing-features-list">
+                <li className="feature-item">
+                  <span className="check-icon">✓</span>
+                  Unlimited creator searches
+                </li>
+                <li className="feature-item">
+                  <span className="check-icon">✓</span>
+                  AI-powered fit scoring
+                </li>
+                <li className="feature-item">
+                  <span className="check-icon">✓</span>
+                  Personalized email generation
+                </li>
+                <li className="feature-item">
+                  <span className="check-icon">✓</span>
+                  Negotiation tracking
+                </li>
+                <li className="feature-item">
+                  <span className="check-icon">✓</span>
+                  Deliverable monitoring
+                </li>
+                <li className="feature-item">
+                  <span className="check-icon">✓</span>
+                  Analytics dashboard
+                </li>
+                <li className="feature-item">
+                  <span className="check-icon">✓</span>
+                  Priority support
+                </li>
               </ul>
             </div>
           </div>
         </div>
       </section>
-
-      <section className="testimonials">
-        <div className="container">
-          <h2 className="section-title">Trusted by D2C teams</h2>
-          <p className="section-subtitle">Customers use Ricoz to save time and improve campaign execution.</p>
-          <div className="testimonial-grid">
-            {testimonials.map((testimonial, index) => (
-              <div key={index} className="testimonial-card">
-                <div className="testimonial-quote">"{testimonial.quote}"</div>
-                <div className="testimonial-author">
-                  <div className="testimonial-name">{testimonial.name}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="faq" className="faq">
-        <div className="container">
-          <h2 className="section-title">FAQ</h2>
-          <p className="section-subtitle">Common questions about the platform and support.</p>
-          <div className="faq-list">
-            {faqs.map((faq, index) => (
-              <div key={index} className="faq-item">
-                <button
-                  className={`faq-question ${activeFaq === index ? 'active' : ''}`}
-                  onClick={() => toggleFaq(index)}
-                >
-                  <span>{faq.question}</span>
-                  <span className="faq-icon">{activeFaq === index ? '−' : '+'}</span>
-                </button>
-                <div className={`faq-answer ${activeFaq === index ? 'active' : ''}`}>
-                  {faq.answer}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="cta" className="cta">
-        <div className="container">
-          <h2>Ready to scale your influencer marketing?</h2>
-          <p>Join brands using Ricoz to move faster, stay organized, and get better creator matches.</p>
-          <Link href="#pricing" className="btn btn-primary btn-lg">Get Started Now</Link>
-        </div>
-      </section>
-
-      <footer className="landing-footer">
-        <div className="container">
-          <div className="footer-content">
-            <div className="footer-section">
-              <h4>Ricoz</h4>
-            </div>
-            <div className="footer-section">
-              <Link href="#features">Features</Link>
-              <Link href="#pricing">Pricing</Link>
-              <Link href="#how-it-works">How It Works</Link>
-            </div>
-            <div className="footer-section">
-              <Link href="#faq">About</Link>
-              <Link href="#faq">Blog</Link>
-              <Link href="#faq">Contact</Link>
-            </div>
-          </div>
-          <div className="footer-bottom">
-            <p>© 2026 Ricoz. <Link href="#faq">Privacy Policy</Link> · <Link href="#faq">Terms of Service</Link></p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
