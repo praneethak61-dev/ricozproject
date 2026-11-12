@@ -2,7 +2,7 @@
   "name": "influencer-agent-backend",
   "version": "1.0.0",
   "description": "AI Influencer Discovery & Outreach Agent — Backend",
-  "main": "dist/index.js",
+  "main": "server.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "build": "tsc",
