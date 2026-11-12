@@ -126,3 +126,6 @@ if (!process.env.VERCEL) {
 
 // Export for Vercel serverless function
 export default app;
+
+// Also export as a named export for compatibility
+export { app };
