@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { Brand } from '../models/Brand';
 import { authMiddleware, AuthRequest } from '../middleware/auth';
 import { validate } from '../middleware/validate';
+import { logActivity } from '../services/activityLog';
 
 const router = Router();
 
@@ -90,6 +91,115 @@ router.delete('/:id', authMiddleware, async (req: AuthRequest, res: Response) =>
   } catch (error) {
     console.error('Delete brand error:', error);
     res.status(500).json({ error: 'Internal Server Error', message: 'Failed to delete brand' });
+  }
+});
+
+// ─── BRAND SAFETY: CREATOR DO-NOT-CONTACT & COMPETITOR BLACKLIST ───
+
+// GET /api/brands/:id/blacklist — List blacklisted creators
+router.get('/:id/blacklist', authMiddleware, async (req: AuthRequest, res: Response) => {
+  try {
+    const brand = await Brand.findOne({ _id: req.params.id, userId: req.user!.userId });
+    if (!brand) {
+      res.status(404).json({ error: 'Not Found', message: 'Brand not found' });
+      return;
+    }
+    res.json({ blacklist: brand.blacklist || [] });
+  } catch (error) {
+    console.error('Get blacklist error:', error);
+    res.status(500).json({ error: 'Internal Server Error', message: 'Failed to fetch blacklist' });
+  }
+});
+
+// POST /api/brands/:id/blacklist — Add creator to blacklist
+router.post('/:id/blacklist', authMiddleware, async (req: AuthRequest, res: Response) => {
+  try {
+    const brand = await Brand.findOne({ _id: req.params.id, userId: req.user!.userId });
+    if (!brand) {
+      res.status(404).json({ error: 'Not Found', message: 'Brand not found' });
+      return;
+    }
+
+    const { channelTitle, channelId, platform, reason, notes } = req.body;
+    if (!channelTitle || !channelTitle.trim()) {
+      res.status(400).json({ error: 'Bad Request', message: 'Creator channel title or handle is required' });
+      return;
+    }
+
+    // Check if already blacklisted
+    const existing = brand.blacklist.find(
+      (b) => b.channelTitle.toLowerCase() === channelTitle.trim().toLowerCase()
+    );
+    if (existing) {
+      res.status(409).json({ error: 'Conflict', message: 'Creator is already in the blacklist' });
+      return;
+    }
+
+    const newEntry = {
+      channelTitle: channelTitle.trim(),
+      channelId: channelId || '',
+      platform: platform || 'youtube',
+      reason: reason || 'competitor',
+      notes: notes || '',
+      addedAt: new Date(),
+    };
+
+    brand.blacklist.push(newEntry as any);
+    await brand.save();
+
+    await logActivity({
+      userId: req.user!.userId,
+      brandId: brand._id,
+      action: 'blacklist',
+      message: `Added creator "${channelTitle}" to the Brand Safety Blacklist (${reason || 'competitor'}).`,
+      meta: { channelTitle, reason },
+    });
+
+    res.status(201).json({
+      message: 'Creator added to blacklist',
+      blacklist: brand.blacklist,
+    });
+  } catch (error) {
+    console.error('Add blacklist error:', error);
+    res.status(500).json({ error: 'Internal Server Error', message: 'Failed to add creator to blacklist' });
+  }
+});
+
+// DELETE /api/brands/:id/blacklist/:entryId — Remove creator from blacklist
+router.delete('/:id/blacklist/:entryId', authMiddleware, async (req: AuthRequest, res: Response) => {
+  try {
+    const brand = await Brand.findOne({ _id: req.params.id, userId: req.user!.userId });
+    if (!brand) {
+      res.status(404).json({ error: 'Not Found', message: 'Brand not found' });
+      return;
+    }
+
+    const entryId = req.params.entryId;
+    const initialCount = brand.blacklist.length;
+
+    brand.blacklist = brand.blacklist.filter(
+      (entry: any) => entry._id?.toString() !== entryId && entry.channelTitle !== entryId
+    );
+
+    if (brand.blacklist.length === initialCount) {
+      res.status(404).json({ error: 'Not Found', message: 'Blacklist entry not found' });
+      return;
+    }
+
+    await brand.save();
+
+    await logActivity({
+      userId: req.user!.userId,
+      brandId: brand._id,
+      action: 'whitelist',
+      message: `Removed creator from Brand Safety Blacklist.`,
+      meta: { entryId },
+    });
+
+    res.json({ message: 'Creator removed from blacklist', blacklist: brand.blacklist });
+  } catch (error) {
+    console.error('Remove blacklist error:', error);
+    res.status(500).json({ error: 'Internal Server Error', message: 'Failed to remove creator from blacklist' });
   }
 });
 

@@ -450,4 +450,131 @@ router.post('/:id/reject', authMiddleware, async (req: AuthRequest, res: Respons
   }
 });
 
+// ─── AI REPLY SENTIMENT & NEGOTIATION COPILOT ───
+// POST /api/negotiations/analyze-reply — Analyzes creator email replies and suggests counter-offers
+router.post('/analyze-reply', authMiddleware, async (req: AuthRequest, res: Response) => {
+  try {
+    const {
+      replyMessage,
+      commissionMin = 10,
+      commissionMax = 25,
+      brandName = 'Our Brand',
+      currentOffer = 12,
+      creatorName = 'Creator',
+    } = req.body;
+
+    if (!replyMessage || typeof replyMessage !== 'string' || !replyMessage.trim()) {
+      res.status(400).json({ error: 'Bad Request', message: 'Reply message text is required' });
+      return;
+    }
+
+    const text = replyMessage.trim();
+    const lower = text.toLowerCase();
+
+    // 1. Detect Rates or Dollar amounts in text
+    const rateMatches = [...text.matchAll(/(\d+(?:\.\d+)?)\s*(?:%|percent)/gi)];
+    const extractedRate = rateMatches.length > 0 ? Number(rateMatches[rateMatches.length - 1][1]) : null;
+
+    const feeMatches = [...text.matchAll(/\$\s*(\d+(?:,\d+)*(?:\.\d+)?)/gi)];
+    const extractedFlatFee = feeMatches.length > 0 ? Number(feeMatches[feeMatches.length - 1][1].replace(/,/g, '')) : null;
+
+    // 2. Determine Sentiment Category
+    let sentiment: 'interested' | 'counter_offer' | 'declined' | 'question' = 'interested';
+    let tone = 'professional';
+    let confidence = 92;
+
+    if (
+      /no thanks|not interested|pass on this|decline|unsubscribe|remove me|not looking for|can't collaborate/i.test(
+        lower
+      )
+    ) {
+      sentiment = 'declined';
+      tone = 'declining';
+    } else if (
+      extractedRate !== null ||
+      extractedFlatFee !== null ||
+      /counter|rate is|my fee is|we charge|usually ask for|looking for at least|would need/i.test(lower)
+    ) {
+      sentiment = 'counter_offer';
+      tone = 'negotiating';
+    } else if (
+      /\?|what is|how do|can you tell me|do you ship|sample|details|deliverables|when is the deadline/i.test(lower)
+    ) {
+      sentiment = 'question';
+      tone = 'inquiring';
+    } else if (/love to|sounds great|interested|let's do it|happy to partner|send over the link/i.test(lower)) {
+      sentiment = 'interested';
+      tone = 'enthusiastic';
+    }
+
+    // 3. Recommended Counter Strategy based on Campaign Commission Guardrails
+    let recommendedAction: 'accept' | 'counter' | 'decline' | 'answer' = 'counter';
+    let recommendedRate = currentOffer;
+    let rationale = '';
+    let draftResponse = '';
+
+    if (sentiment === 'declined') {
+      recommendedAction = 'decline';
+      rationale = 'Creator explicitly declined the collaboration. Archive lead to keep outreach health high.';
+      draftResponse = `Hi ${creatorName},\n\nThank you for letting us know! We completely understand. If your schedule or partnership criteria open up in the future, we'd love to reconnect.\n\nBest,\nThe ${brandName} Team`;
+    } else if (sentiment === 'counter_offer') {
+      if (extractedRate !== null) {
+        if (extractedRate <= commissionMax && extractedRate >= commissionMin) {
+          recommendedAction = 'accept';
+          recommendedRate = extractedRate;
+          rationale = `Creator counter-offer of ${extractedRate}% is within the brand guardrail ceiling of ${commissionMax}%. Accepting locks in the deal immediately.`;
+          draftResponse = `Hi ${creatorName},\n\nThanks for the quick counter! We're happy to agree to ${extractedRate}% commission for this campaign. Let's get your tracking link and product sample set up right away.\n\nBest,\n${brandName}`;
+        } else if (extractedRate > commissionMax) {
+          recommendedAction = 'counter';
+          recommendedRate = commissionMax;
+          rationale = `Creator asked for ${extractedRate}%, which exceeds your ${commissionMax}% maximum ceiling. Recommend offering the maximum ceiling (${commissionMax}%) as our best and final rate.`;
+          draftResponse = `Hi ${creatorName},\n\nWe really appreciate your interest and love your channel's work. While our campaign budget is strictly capped at ${commissionMax}% commission, we'd love to offer you that ceiling (${commissionMax}%) to make this partnership happen. Would that work for you?\n\nWarm regards,\n${brandName}`;
+        } else {
+          recommendedAction = 'counter';
+          recommendedRate = Math.min(commissionMax, Math.max(commissionMin, extractedRate));
+          rationale = `Rate proposal noted. Recommend counter at ${recommendedRate}%.`;
+          draftResponse = `Hi ${creatorName},\n\nSounds promising! We can confirm a ${recommendedRate}% commission rate for this upcoming drop.\n\nBest,\n${brandName}`;
+        }
+      } else if (extractedFlatFee !== null) {
+        recommendedAction = 'counter';
+        recommendedRate = commissionMax;
+        rationale = `Creator proposed a flat fee of $${extractedFlatFee}. Recommend proposing a performance-based hybrid of ${commissionMax}% commission with free product gifting.`;
+        draftResponse = `Hi ${creatorName},\n\nThanks for sharing your rate card! For this specific growth campaign, we operate primarily on performance-based commission (up to ${commissionMax}%) plus full complimentary product gifting so you earn recurring revenue with each sale. Could we explore that structure?\n\nBest,\n${brandName}`;
+      } else {
+        recommendedAction = 'counter';
+        recommendedRate = Math.min(commissionMax, currentOffer + 3);
+        rationale = `Creator indicated room to negotiate. Recommend stepping offer up to ${recommendedRate}%.`;
+        draftResponse = `Hi ${creatorName},\n\nWe'd love to find a middle ground that works well for both of us. We can increase our offer to ${recommendedRate}% commission on all trackable sales.\n\nBest,\n${brandName}`;
+      }
+    } else if (sentiment === 'question') {
+      recommendedAction = 'answer';
+      recommendedRate = currentOffer;
+      rationale = 'Creator is asking clarifying questions before committing. Answer questions clearly to build trust.';
+      draftResponse = `Hi ${creatorName},\n\nGreat question! We provide full complimentary product samples shipped express, and you'll receive a dedicated tracking link with real-time dashboard analytics earning ${currentOffer}% commission per conversion. Does that sound like a fit?\n\nBest,\n${brandName}`;
+    } else {
+      recommendedAction = 'accept';
+      recommendedRate = currentOffer;
+      rationale = 'Creator expressed high interest and enthusiasm. Send campaign onboarding details immediately.';
+      draftResponse = `Hi ${creatorName},\n\nThrilled to have you on board! We'll prepare your personalized tracking link and send over sample selection details. Looking forward to an amazing collaboration!\n\nBest,\n${brandName}`;
+    }
+
+    res.json({
+      analysis: {
+        sentiment,
+        extractedRate,
+        extractedFlatFee,
+        confidence,
+        tone,
+        recommendedAction,
+        recommendedRate,
+        rationale,
+        draftResponse,
+      },
+    });
+  } catch (error) {
+    console.error('Analyze reply error:', error);
+    res.status(500).json({ error: 'Internal Server Error', message: 'Failed to analyze reply' });
+  }
+});
+
 export default router;

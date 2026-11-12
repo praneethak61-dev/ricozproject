@@ -315,7 +315,25 @@ router.get('/:brandId/creators', authMiddleware, async (req: AuthRequest, res: R
     }
 
     const creators = await Creator.find(filter).sort({ fitScore: -1 });
-    res.json({ creators });
+
+    const blacklistMap = new Map<string, string>();
+    if (brand.blacklist && Array.isArray(brand.blacklist)) {
+      for (const b of brand.blacklist) {
+        blacklistMap.set(b.channelTitle.toLowerCase().trim(), b.reason);
+      }
+    }
+
+    const enhancedCreators = creators.map((c) => {
+      const obj = c.toObject();
+      const reason = blacklistMap.get(c.channelTitle.toLowerCase().trim());
+      return {
+        ...obj,
+        isBlacklisted: !!reason,
+        blacklistReason: reason || null,
+      };
+    });
+
+    res.json({ creators: enhancedCreators });
   } catch (error) {
     console.error('List creators error:', error);
     res.status(500).json({ error: 'Internal Server Error', message: 'Failed to fetch creators' });

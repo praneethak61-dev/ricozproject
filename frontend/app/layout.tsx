@@ -14,11 +14,14 @@ function SidebarInner() {
 
   const links = [
     { href: '/', label: 'Dashboard', icon: '📊' },
-    { href: '/onboarding', label: 'Onboarding', icon: '🚀' },
-    { href: '/agent', label: 'Ask the agent', icon: '✨' },
-    { href: '/brands', label: 'Brands', icon: '🏷️' },
     { href: '/campaigns', label: 'Campaigns', icon: '📋' },
-    { href: '/plan', label: 'Plan', icon: '💳' },
+    { href: '/negotiations', label: 'Negotiation Copilot', icon: '🤝' },
+    { href: '/deliverables', label: 'Social Listening', icon: '📈' },
+    { href: '/brand-safety', label: 'Brand Safety & DNC', icon: '🛡️' },
+    { href: '/payouts', label: 'Stripe Payouts', icon: '💳' },
+    { href: '/brands', label: 'Brands', icon: '🏷️' },
+    { href: '/agent', label: 'Ask the Agent', icon: '✨' },
+    { href: '/plan', label: 'Plan & Billing', icon: '💎' },
   ];
 
   return (
@@ -68,19 +71,27 @@ function Sidebar() {
 function LayoutContentInner({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth();
   const pathname = usePathname();
-  const isAuthPage = pathname === '/login' || pathname === '/register';
+  const isAuthPage = pathname === '/login' || pathname === '/register' || pathname === '/forgot-password';
+  const isLandingPage = pathname === '/';
 
   if (loading) {
     return <div className="loading-page"><span className="spinner" /> Loading...</div>;
   }
 
-  if (!user && !isAuthPage) {
+  // When user is not logged in
+  if (!user) {
+    // Show landing page or auth page directly without redirect or sidebar
+    if (isLandingPage || isAuthPage) {
+      return <>{children}</>;
+    }
+    // Protected routes: redirect to login
     if (typeof window !== 'undefined') {
       window.location.href = '/login';
     }
     return <div className="loading-page"><span className="spinner" /> Redirecting...</div>;
   }
 
+  // When user is logged in
   if (isAuthPage) {
     return <>{children}</>;
   }

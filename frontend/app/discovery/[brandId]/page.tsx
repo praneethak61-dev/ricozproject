@@ -23,6 +23,8 @@ interface Creator {
   sample?: boolean;
   scoreBreakdown?: ScoreBreakdown;
   recentVideos?: RecentVideo[];
+  isBlacklisted?: boolean;
+  blacklistReason?: string;
 }
 
 interface Brand {
@@ -228,13 +230,26 @@ function DiscoveryContent() {
                     productPrice={brand?.productPrice || 25}
                     sample={creator.sample}
                   />
+                  {creator.isBlacklisted && (
+                    <div className="discovery-blacklist-warning">
+                      <span>⛔ Blacklisted ({creator.blacklistReason || 'Restricted'})</span>
+                      <span>— Excluded by Brand Safety Rules. Unblock in Brand Safety &amp; DNC to approve.</span>
+                    </div>
+                  )}
                   <div style={{ display: 'flex', gap: 8, marginTop: 12, alignItems: 'center' }}>
                     <span className={`badge ${creator.status === 'approved' ? 'badge-success' : creator.status === 'rejected' ? 'badge-danger' : 'badge-warning'}`}>
                       {creator.status.toUpperCase()}
                     </span>
                     {creator.status === 'pending' && (
                       <>
-                        <button className="btn btn-success btn-sm" onClick={() => handleStatus(creator._id, 'approved')}>✓ Approve</button>
+                        <button
+                          className="btn btn-success btn-sm"
+                          onClick={() => handleStatus(creator._id, 'approved')}
+                          disabled={creator.isBlacklisted}
+                          title={creator.isBlacklisted ? 'Creator is in Brand Safety Blacklist' : undefined}
+                        >
+                          ✓ Approve
+                        </button>
                         <button className="btn btn-danger btn-sm" onClick={() => handleStatus(creator._id, 'rejected')}>✗ Reject</button>
                       </>
                     )}
