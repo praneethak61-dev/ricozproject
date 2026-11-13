@@ -1,0 +1,37 @@
+services:
+  - type: web
+    name: ricoz-backend
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: YOUTUBE_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: TEST_EMAIL
+        sync: false
+      - key: SENDER_NAME
+        sync: false
+      - key: SENDER_EMAIL
+        sync: false
+      - key: PHYSICAL_ADDRESS
+        sync: false
